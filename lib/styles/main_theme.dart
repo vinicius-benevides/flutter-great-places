@@ -3,7 +3,10 @@ import 'package:greate_places/utils/custom_route.dart';
 
 ThemeData mainTheme(BuildContext context) {
   return ThemeData(
-    colorScheme: ColorScheme.light(primary: Colors.indigo),
+    colorScheme: ColorScheme.light(
+      primary: Colors.indigo,
+      secondary: Colors.amber,
+    ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     appBarTheme: Theme.of(context).appBarTheme.copyWith(
       backgroundColor: Theme.of(context).colorScheme.primary,
