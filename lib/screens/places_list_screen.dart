@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:greate_places/providers/greate_places.dart';
 import 'package:greate_places/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 class PlacesListScreen extends StatelessWidget {
   const PlacesListScreen({super.key});
@@ -18,7 +20,23 @@ class PlacesListScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(child: CircularProgressIndicator()),
+      body: Consumer<GreatePlaces>(
+        builder: (ctx, greatPlaces, child) => greatPlaces.itemsCount == 0
+            ? child!
+            : ListView.builder(
+                itemCount: greatPlaces.itemsCount,
+                itemBuilder: (ctx, i) => ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: FileImage(
+                      greatPlaces.itemByIndex(i).image,
+                    ),
+                  ),
+                  title: Text(greatPlaces.itemByIndex(i).title),
+                  onTap: () {},
+                ),
+              ),
+        child: Center(child: Text('Register a place to get started!')),
+      ),
     );
   }
 }
