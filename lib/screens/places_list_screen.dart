@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:greate_places/providers/greate_places.dart';
-import 'package:greate_places/utils/app_routes.dart';
+import 'package:great_places/providers/great_places.dart';
+import 'package:great_places/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
 class PlacesListScreen extends StatelessWidget {
@@ -10,7 +10,7 @@ class PlacesListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Greate Places'),
+        title: Text('Great Places'),
         actions: [
           IconButton(
             onPressed: () {
@@ -20,7 +20,7 @@ class PlacesListScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Consumer<GreatePlaces>(
+      body: Consumer<GreatPlaces>(
         builder: (ctx, greatPlaces, child) => greatPlaces.itemsCount == 0
             ? child!
             : ListView.builder(

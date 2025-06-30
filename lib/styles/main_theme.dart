@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:greate_places/utils/custom_route.dart';
+import 'package:great_places/utils/custom_route.dart';
 
 ThemeData mainTheme(BuildContext context) {
   return ThemeData(

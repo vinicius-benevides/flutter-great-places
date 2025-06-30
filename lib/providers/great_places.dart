@@ -1,10 +1,10 @@
 import 'dart:io' as io;
 
 import 'package:flutter/material.dart';
-import 'package:greate_places/models/place.dart';
+import 'package:great_places/models/place.dart';
 import 'package:uuid/uuid.dart';
 
-class GreatePlaces with ChangeNotifier {
+class GreatPlaces with ChangeNotifier {
   final List<Place> _items = [];
 
   List<Place> get items {

@@ -1,6 +1,6 @@
 {
-    "name": "greate_places",
-    "short_name": "greate_places",
+    "name": "great_places",
+    "short_name": "great_places",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

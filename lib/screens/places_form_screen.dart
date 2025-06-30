@@ -1,8 +1,8 @@
 import 'dart:io' as io;
 
 import 'package:flutter/material.dart';
-import 'package:greate_places/providers/greate_places.dart';
-import 'package:greate_places/widgets/image_input.dart';
+import 'package:great_places/providers/great_places.dart';
+import 'package:great_places/widgets/image_input.dart';
 import 'package:provider/provider.dart';
 
 class PlacesFormScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class _PlacesFormScreenState extends State<PlacesFormScreen> {
   void _submitForm() {
     if (_titleController.text.isEmpty || _storedImage == null) return;
 
-    Provider.of<GreatePlaces>(
+    Provider.of<GreatPlaces>(
       context,
       listen: false,
     ).addPlace(_titleController.text, _storedImage!);
