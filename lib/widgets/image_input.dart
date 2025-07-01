@@ -5,7 +5,7 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
 
 class ImageInput extends StatefulWidget {
-  final Function onSelectImage;
+  final Function(io.File image) onSelectImage;
 
   const ImageInput({super.key, required this.onSelectImage});
 
@@ -16,10 +16,10 @@ class ImageInput extends StatefulWidget {
 class _ImageInputState extends State<ImageInput> {
   io.File? _storedImage;
 
-  Future<void> _takePicture() async {
+  Future<void> _pickImage(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
     final XFile? imageFile = await picker.pickImage(
-      source: ImageSource.camera,
+      source: source,
       maxWidth: 600,
     );
 
@@ -30,30 +30,53 @@ class _ImageInputState extends State<ImageInput> {
     });
 
     final appDir = await syspaths.getApplicationDocumentsDirectory();
-    String fileName = path.basename(_storedImage!.path);
-
+    final fileName = path.basename(_storedImage!.path);
     final savedImage = await _storedImage!.copy('${appDir.path}/$fileName');
 
     widget.onSelectImage(savedImage);
   }
 
+  void _showImageSourceOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Wrap(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.camera_alt),
+                  title: const Text('Take Picture'),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    _pickImage(ImageSource.camera);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.photo_library),
+                  title: const Text('Select from Galery'),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    _pickImage(ImageSource.gallery);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget imageWidget = const Text(
-      'No images were taken',
-      textAlign: TextAlign.center,
-    );
-
-    if (_storedImage != null) {
-      imageWidget = Image.file(
-        _storedImage!,
-        width: double.infinity,
-        fit: BoxFit.cover,
-      );
-    }
+    final imagePreview = _storedImage != null
+        ? Image.file(_storedImage!, width: double.infinity, fit: BoxFit.cover)
+        : const Text('No Images were taken', textAlign: TextAlign.center);
 
     return Row(
-      spacing: 10,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           width: 180,
@@ -62,13 +85,14 @@ class _ImageInputState extends State<ImageInput> {
           decoration: BoxDecoration(
             border: Border.all(width: 1, color: Colors.grey),
           ),
-          child: imageWidget,
+          child: imagePreview,
         ),
+        const SizedBox(width: 10),
         Expanded(
           child: TextButton.icon(
-            onPressed: _takePicture,
-            icon: const Icon(Icons.camera_alt),
-            label: const Text('Tirar Foto'),
+            icon: const Icon(Icons.image),
+            label: const Text('Add Image'),
+            onPressed: () => _showImageSourceOptions(context),
           ),
         ),
       ],
