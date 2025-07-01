@@ -20,7 +20,7 @@ class _LocationInputState extends State<LocationInput> {
     if (locationData.latitude == null || locationData.longitude == null) return;
 
     setState(() {
-      _previewImageUrl = 'assets\\images\\map_template.png';
+      _previewImageUrl = 'assets/images/map_template.png';
     });
 
     widget.onSelectPosition(
