@@ -40,7 +40,7 @@ class _ImageInputState extends State<ImageInput> {
   @override
   Widget build(BuildContext context) {
     Widget imageWidget = const Text(
-      'Nenhuma imagem foi tirada',
+      'No images were taken',
       textAlign: TextAlign.center,
     );
 

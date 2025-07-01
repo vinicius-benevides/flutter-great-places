@@ -19,7 +19,10 @@ class GreatPlaces with ChangeNotifier {
           id: item['id'] as String,
           title: item['title'] as String,
           image: io.File(item['image'] as String),
-          location: null,
+          location: PlaceLocation(
+            latitude: item['latitude'] as double,
+            longitude: item['longitude'] as double,
+          ),
         ),
       );
     }
@@ -39,13 +42,13 @@ class GreatPlaces with ChangeNotifier {
     return _items[index];
   }
 
-  void addPlace(String title, io.File image) {
+  void addPlace(String title, io.File image, PlaceLocation location) {
     var uuid = Uuid();
 
     final newPlace = Place(
       id: uuid.v4(),
       title: title,
-      location: null,
+      location: location,
       image: image,
     );
 
@@ -56,6 +59,8 @@ class GreatPlaces with ChangeNotifier {
       'id': newPlace.id,
       'title': newPlace.title,
       'image': newPlace.image.path,
+      'latitude': newPlace.location.latitude,
+      'longitude': newPlace.location.longitude,
     });
   }
 }

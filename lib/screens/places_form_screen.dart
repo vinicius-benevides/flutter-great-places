@@ -1,8 +1,10 @@
 import 'dart:io' as io;
 
 import 'package:flutter/material.dart';
+import 'package:great_places/models/place.dart';
 import 'package:great_places/providers/great_places.dart';
 import 'package:great_places/widgets/image_input.dart';
+import 'package:great_places/widgets/location_input.dart';
 import 'package:provider/provider.dart';
 
 class PlacesFormScreen extends StatefulWidget {
@@ -15,6 +17,7 @@ class PlacesFormScreen extends StatefulWidget {
 class _PlacesFormScreenState extends State<PlacesFormScreen> {
   final _titleController = TextEditingController();
   io.File? _storedImage;
+  PlaceLocation? _pickedPosition;
 
   void _selectImage(io.File storedImage) {
     setState(() {
@@ -22,13 +25,25 @@ class _PlacesFormScreenState extends State<PlacesFormScreen> {
     });
   }
 
+  void _selectPosition(PlaceLocation pickedPosition) {
+    setState(() {
+      _pickedPosition = pickedPosition;
+    });
+  }
+
+  bool _isValidForm() {
+    return _titleController.text.isNotEmpty &&
+        _storedImage != null &&
+        _pickedPosition != null;
+  }
+
   void _submitForm() {
-    if (_titleController.text.isEmpty || _storedImage == null) return;
+    if (!_isValidForm()) return;
 
     Provider.of<GreatPlaces>(
       context,
       listen: false,
-    ).addPlace(_titleController.text, _storedImage!);
+    ).addPlace(_titleController.text, _storedImage!, _pickedPosition!);
 
     Navigator.of(context).pop();
   }
@@ -52,13 +67,14 @@ class _PlacesFormScreenState extends State<PlacesFormScreen> {
                       controller: _titleController,
                     ),
                     ImageInput(onSelectImage: _selectImage),
+                    LocationInput(onSelectPosition: _selectPosition),
                   ],
                 ),
               ),
             ),
           ),
           ElevatedButton.icon(
-            onPressed: _submitForm,
+            onPressed: _isValidForm() ? _submitForm : null,
             icon: Icon(Icons.add, size: 28, weight: 700),
             label: Text(
               'Add',
