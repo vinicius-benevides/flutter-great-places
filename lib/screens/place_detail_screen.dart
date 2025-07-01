@@ -18,29 +18,66 @@ class PlaceDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Place place = ModalRoute.of(context)?.settings.arguments as Place;
     return Scaffold(
-      appBar: AppBar(title: Text(place.title)),
-      body: Column(
-        spacing: 10,
-        children: [
-          SizedBox(
-            height: 250,
-            width: double.infinity,
-            child: Image.file(
-              place.image,
-              fit: BoxFit.cover,
-              width: double.infinity,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 250,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Hero(
+                    tag: place.id,
+                    child: Image.file(place.image, fit: BoxFit.cover),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      width: double.infinity,
+                      color: Colors.black26,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 20,
+                      ),
+                      child: Text(
+                        place.title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          shadows: [Shadow(blurRadius: 2, color: Colors.black)],
+                        ),
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          Text(
-            place.location.address,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, color: Colors.grey),
-          ),
-          TextButton.icon(
-            icon: Icon(Icons.map_outlined),
-            label: Text('See on map'),
-            onPressed: () =>
-                _openMap(place.location.latitude, place.location.longitude),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  place.location.address,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, color: Colors.blueGrey[800]),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: TextButton.icon(
+                  icon: Icon(Icons.map_outlined),
+                  label: Text('See on map'),
+                  onPressed: () => _openMap(
+                    place.location.latitude,
+                    place.location.longitude,
+                  ),
+                ),
+              ),
+            ]),
           ),
         ],
       ),

@@ -32,9 +32,12 @@ class PlacesListScreen extends StatelessWidget {
                     : ListView.builder(
                         itemCount: greatPlaces.itemsCount,
                         itemBuilder: (ctx, i) => ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: FileImage(
-                              greatPlaces.itemByIndex(i).image,
+                          leading: Hero(
+                            tag: greatPlaces.itemByIndex(i).id,
+                            child: CircleAvatar(
+                              backgroundImage: FileImage(
+                                greatPlaces.itemByIndex(i).image,
+                              ),
                             ),
                           ),
                           title: Text(greatPlaces.itemByIndex(i).title),
