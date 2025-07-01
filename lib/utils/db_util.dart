@@ -30,4 +30,10 @@ class DbUtil {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
+  static Future<void> delete(String table, String id) async {
+    final db = await DbUtil.database();
+
+    await db.delete(table, where: 'id = ?', whereArgs: [id]);
+  }
 }

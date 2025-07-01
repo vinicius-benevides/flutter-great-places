@@ -63,4 +63,15 @@ class GreatPlaces with ChangeNotifier {
       'longitude': newPlace.location.longitude,
     });
   }
+
+  void removePlace(String id) {
+    var index = _items.indexWhere((item) => item.id == id);
+
+    if (index == -1) return;
+
+    _items.removeAt(index);
+    notifyListeners();
+
+    DbUtil.delete('places', id);
+  }
 }
