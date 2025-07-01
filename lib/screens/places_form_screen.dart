@@ -63,8 +63,11 @@ class _PlacesFormScreenState extends State<PlacesFormScreen> {
                   spacing: 10,
                   children: [
                     TextField(
-                      decoration: InputDecoration(labelText: 'Title'),
                       controller: _titleController,
+                      decoration: InputDecoration(labelText: 'Title'),
+                      onChanged: (_) {
+                        setState(() {});
+                      },
                     ),
                     ImageInput(onSelectImage: _selectImage),
                     LocationInput(onSelectPosition: _selectPosition),
