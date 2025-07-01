@@ -55,7 +55,7 @@ class _ImageInputState extends State<ImageInput> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.photo_library),
-                  title: const Text('Select from Galery'),
+                  title: const Text('Select from Gallery'),
                   onTap: () {
                     Navigator.of(context).pop();
                     _pickImage(ImageSource.gallery);
